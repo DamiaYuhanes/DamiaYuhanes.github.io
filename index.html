@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Damia Yuhanes — Software Engineering Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #12121a;
+      --bg3: #1a1a26;
+      --border: #2a2a3d;
+      --accent: #7c6af7;
+      --accent2: #a78bfa;
+      --teal: #2dd4bf;
+      --text: #e2e2f0;
+      --muted: #8888aa;
+      --card: #14141f;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Fira Code', monospace;
+      font-size: 1rem;
+      color: var(--accent2);
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 100px 2rem 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,106,247,0.15) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 720px; text-align: center; position: relative; }
+    .hero-avatar {
+      width: 110px; height: 110px; border-radius: 50%;
+      object-fit: cover; object-position: center top;
+      border: 3px solid rgba(124,106,247,0.5);
+      margin: 0 auto 1.5rem;
+      display: block;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(124,106,247,0.15);
+      border: 1px solid rgba(124,106,247,0.3);
+      color: var(--accent2);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      padding: 6px 16px; border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-name {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .hero-name span {
+      background: linear-gradient(135deg, var(--accent2), var(--teal));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-role {
+      font-size: 1.125rem; color: var(--muted); margin-bottom: 1.5rem;
+    }
+    .hero-desc {
+      font-size: 1rem; color: var(--muted); max-width: 560px; margin: 0 auto 2.5rem;
+    }
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 500; text-decoration: none;
+      transition: all 0.2s; cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent2); color: var(--accent2); transform: translateY(-2px); }
+
+    /* SECTION */
+    section { padding: 80px 2rem; }
+    .container { max-width: 960px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--accent2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700; margin-bottom: 3rem;
+    }
+    .divider {
+      width: 40px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      border-radius: 2px; margin-bottom: 1rem;
+    }
+
+    /* ABOUT */
+    #about { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 0.975rem; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem; text-align: center;
+    }
+    .stat-num { font-size: 2rem; font-weight: 800; color: var(--accent2); }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+    .skill-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .skill-card:hover { border-color: var(--accent); }
+    .skill-card-title {
+      font-size: 0.8rem; font-weight: 600; color: var(--accent2);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      background: rgba(124,106,247,0.1);
+      border: 1px solid rgba(124,106,247,0.2);
+      color: var(--text); font-size: 0.78rem;
+      padding: 3px 10px; border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+    }
+    .tag.teal {
+      background: rgba(45,212,191,0.1);
+      border-color: rgba(45,212,191,0.2);
+    }
+
+    /* PROJECTS */
+    #projects { background: var(--bg2); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 1.5rem; }
+    .project-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .project-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .project-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .project-links { display: flex; gap: 8px; }
+    .project-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.8rem;
+      padding: 4px 10px; border: 1px solid var(--border);
+      border-radius: 6px; transition: all 0.2s;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .project-links a:hover { color: var(--accent2); border-color: var(--accent2); }
+    .project-name { font-size: 1.1rem; font-weight: 700; }
+    .project-desc { color: var(--muted); font-size: 0.9rem; }
+    .project-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .project-bullets li {
+      font-size: 0.85rem; color: var(--muted); padding-left: 1rem; position: relative;
+    }
+    .project-bullets li::before {
+      content: '→'; position: absolute; left: 0; color: var(--accent2);
+    }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+    .stack-tag {
+      background: rgba(45,212,191,0.08);
+      border: 1px solid rgba(45,212,191,0.15);
+      color: var(--teal); font-size: 0.75rem;
+      padding: 2px 8px; border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* EDUCATION */
+    .edu-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem;
+      display: flex; gap: 1.5rem; align-items: flex-start;
+    }
+    .edu-icon {
+      width: 52px; height: 52px; min-width: 52px;
+      background: rgba(124,106,247,0.15);
+      border-radius: 12px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.5rem;
+    }
+    .edu-degree { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+    .edu-school { color: var(--accent2); font-size: 0.9rem; margin-bottom: 8px; }
+    .edu-meta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .edu-badge {
+      background: rgba(45,212,191,0.1); border: 1px solid rgba(45,212,191,0.2);
+      color: var(--teal); font-size: 0.78rem;
+      padding: 3px 10px; border-radius: 6px;
+    }
+
+    /* CERTIFICATIONS */
+    #certs { background: var(--bg2); }
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .cert-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+      transition: border-color 0.2s;
+    }
+    .cert-card:hover { border-color: var(--accent); }
+    .cert-icon { font-size: 1.5rem; }
+    .cert-name { font-size: 0.9rem; font-weight: 600; }
+    .cert-issuer { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+    .contact-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      text-decoration: none; color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .contact-card:hover { border-color: var(--accent2); transform: translateY(-3px); }
+    .contact-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .contact-value { font-size: 0.9rem; font-weight: 500; }
+    .contact-icon { font-size: 1.5rem; margin-bottom: 4px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem; text-align: center;
+      color: var(--muted); font-size: 0.85rem;
+    }
+    footer span { color: var(--accent2); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.78rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      section { padding: 60px 1.25rem; }
+    }
+
+    /* CSR / LEADERSHIP */
+    .csr-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .csr-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .csr-gallery img { width: 100%; border-radius: 10px; object-fit: cover; height: 160px; display: block; }
+    .csr-gallery img.wide { grid-column: span 2; height: 200px; }
+    .csr-content { display: flex; flex-direction: column; gap: 1rem; }
+    .csr-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(45,212,191,0.1); border: 1px solid rgba(45,212,191,0.3);
+      color: var(--teal); font-size: 0.75rem;
+      padding: 3px 10px; border-radius: 100px; width: fit-content;
+    }
+    .csr-title { font-size: 1.3rem; font-weight: 700; }
+    .csr-host { color: var(--accent2); font-size: 0.9rem; font-weight: 500; }
+    .csr-desc { color: var(--muted); font-size: 0.875rem; line-height: 1.7; }
+    .csr-highlights { display: flex; flex-direction: column; gap: 8px; list-style: none; }
+    .csr-highlights li { font-size: 0.85rem; color: var(--muted); padding-left: 1rem; position: relative; }
+    .csr-highlights li::before { content: '→'; position: absolute; left: 0; color: var(--teal); }
+    .plaque-img { width: 100%; border-radius: 10px; border: 1px solid var(--border); margin-top: 8px; }
+    @media (max-width: 768px) {
+      .csr-layout { grid-template-columns: 1fr; }
+    }
+
+    /* INTL PROGRAMMES */
+    .intl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 1.5rem; }
+    .intl-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .intl-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .intl-img { width: 100%; height: 220px; object-fit: cover; object-position: center top; display: block; }
+    .intl-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .intl-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(124,106,247,0.15); border: 1px solid rgba(124,106,247,0.3);
+      color: var(--accent2); font-size: 0.75rem;
+      padding: 3px 10px; border-radius: 100px; width: fit-content;
+    }
+    .intl-title { font-size: 1.05rem; font-weight: 700; }
+    .intl-host { color: var(--teal); font-size: 0.85rem; font-weight: 500; }
+    .intl-desc { color: var(--muted); font-size: 0.875rem; }
+    .intl-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">damia.dev</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#international">Global</a></li>
+      <li><a href="#leadership">Leadership</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <img src="images/profile.jpg" alt="Damia Yuhanes" class="hero-avatar" />
+      <div class="hero-badge">&#128640; Open to Opportunities</div>
+      <h1 class="hero-name">
+        Hi, I'm <span>Damia Yuhanes</span>
+      </h1>
+      <p class="hero-role">Software Engineering Undergraduate &mdash; Web &bull; AI &bull; Data Analytics &bull; IoT</p>
+      <p class="hero-desc">
+        Final year student at UniKL MIIT building real-world systems across web development,
+        AI-enabled applications, and embedded IoT. CGPA 3.58 &bull; Dean's List.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View My Projects</a>
+        <a href="https://www.linkedin.com/in/damia-yuhanes-farid-331492305/" target="_blank" class="btn btn-outline">LinkedIn</a>
+        <a href="https://github.com/DamiaYuhanes" target="_blank" class="btn btn-outline">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container reveal">
+      <div class="section-label">// about me</div>
+      <div class="divider"></div>
+      <h2 class="section-title">Who I Am</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I'm a final year Bachelor of Information Technology (Hons) in Software Engineering student
+            at Universiti Kuala Lumpur, Malaysian Institute of Information Technology (UniKL MIIT),
+            based in Kuala Lumpur, Malaysia.
+          </p>
+          <p>
+            I build end-to-end systems — from full-stack web apps and data analytics dashboards to
+            AI-powered mobile applications and IoT hardware integrations. I enjoy turning complex
+            problems into clean, functional solutions.
+          </p>
+          <p>
+            Certified in IBM Generative AI Engineering, IBM AI Developer, and Google Project Management.
+            Dean's List achiever with a CGPA of 3.58/4.00.
+          </p>
+        </div>
+        <div class="about-stats">
+          <div class="stat-card">
+            <div class="stat-num">4</div>
+            <div class="stat-label">Projects Built</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">3.58</div>
+            <div class="stat-label">CGPA / 4.00</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">20+</div>
+            <div class="stat-label">Certifications</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">2</div>
+            <div class="stat-label">Intl. Programmes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container reveal">
+      <div class="section-label">// technical skills</div>
+      <div class="divider"></div>
+      <h2 class="section-title">What I Work With</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-card-title">&#128187; Languages</div>
+          <div class="skill-tags">
+            <span class="tag">Python</span>
+            <span class="tag">PHP</span>
+            <span class="tag">SQL</span>
+            <span class="tag">C++</span>
+            <span class="tag">Java</span>
+            <span class="tag">Dart</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">&#127760; Web / Mobile / Backend</div>
+          <div class="skill-tags">
+            <span class="tag">PHP</span>
+            <span class="tag">Flutter</span>
+            <span class="tag">Flask</span>
+            <span class="tag">MySQLi</span>
+            <span class="tag">REST APIs</span>
+            <span class="tag">CRUD</span>
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">&#128200; Data &amp; Analytics</div>
+          <div class="skill-tags">
+            <span class="tag teal">Pandas</span>
+            <span class="tag teal">NetworkX</span>
+            <span class="tag teal">Matplotlib</span>
+            <span class="tag teal">Streamlit</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">&#129504; AI / Machine Learning</div>
+          <div class="skill-tags">
+            <span class="tag teal">TensorFlow</span>
+            <span class="tag teal">MediaPipe</span>
+            <span class="tag teal">CNN</span>
+            <span class="tag teal">Hugging Face</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">&#128268; Databases</div>
+          <div class="skill-tags">
+            <span class="tag">MariaDB</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">SQLite</span>
+            <span class="tag">Firebase</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">&#128299; Embedded / IoT</div>
+          <div class="skill-tags">
+            <span class="tag teal">Arduino</span>
+            <span class="tag teal">ESP32</span>
+            <span class="tag teal">ESP8266</span>
+            <span class="tag teal">RFID</span>
+            <span class="tag teal">Blynk Cloud</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container reveal">
+      <div class="section-label">// projects</div>
+      <div class="divider"></div>
+      <h2 class="section-title">Things I've Built</h2>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon" style="background: rgba(124,106,247,0.15);">&#129504;</div>
+            <div class="project-links">
+              <a href="https://github.com/DamiaYuhanes" target="_blank">&#128279; GitHub</a>
+            </div>
+          </div>
+          <div class="project-name">AI Gesture Controlled Wheelchair</div>
+          <ul class="project-bullets">
+            <li>Real-time hand gesture recognition using MediaPipe + TensorFlow CNN</li>
+            <li>Translates gestures into directional motor control commands</li>
+            <li>ESP8266 wireless communication with real-time motor actuation</li>
+            <li>Optimized inference latency for safe assistive mobility</li>
+          </ul>
+          <div class="project-stack">
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">TensorFlow</span>
+            <span class="stack-tag">MediaPipe</span>
+            <span class="stack-tag">ESP8266</span>
+            <span class="stack-tag">Arduino</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon" style="background: rgba(45,212,191,0.15);">&#128202;</div>
+            <div class="project-links">
+              <a href="https://github.com/DamiaYuhanes" target="_blank">&#128279; GitHub</a>
+            </div>
+          </div>
+          <div class="project-name">WikiScope</div>
+          <ul class="project-bullets">
+            <li>Python + Streamlit dashboard for Wikipedia revision analysis</li>
+            <li>Wikimedia REST API data collection with Pandas preprocessing</li>
+            <li>Editor transition networks built with NetworkX</li>
+            <li>Cross-page timeline patterns &amp; keyword comment analysis</li>
+          </ul>
+          <div class="project-stack">
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">Streamlit</span>
+            <span class="stack-tag">Pandas</span>
+            <span class="stack-tag">NetworkX</span>
+            <span class="stack-tag">Wikimedia API</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon" style="background: rgba(251,191,36,0.15);">&#127915;</div>
+            <div class="project-links">
+              <a href="https://github.com/DamiaYuhanes" target="_blank">&#128279; GitHub</a>
+            </div>
+          </div>
+          <div class="project-name">BizTix — Event Ticketing App</div>
+          <ul class="project-bullets">
+            <li>Full-stack web ticketing system with public browsing &amp; booking</li>
+            <li>Admin CRUD modules for events, bookings, and payment status</li>
+            <li>Relational DB schema: events, categories, customers, bookings</li>
+            <li>Server-side validation with secure password hash auth</li>
+          </ul>
+          <div class="project-stack">
+            <span class="stack-tag">PHP</span>
+            <span class="stack-tag">HTML/CSS</span>
+            <span class="stack-tag">MariaDB</span>
+            <span class="stack-tag">MySQLi</span>
+            <span class="stack-tag">XAMPP</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon" style="background: rgba(52,211,153,0.15);">&#127947;</div>
+            <div class="project-links">
+              <a href="https://github.com/DamiaYuhanes" target="_blank">&#128279; GitHub</a>
+            </div>
+          </div>
+          <div class="project-name">FitAlign — AI Fitness Companion</div>
+          <ul class="project-bullets">
+            <li>Cross-platform Flutter app with Flask backend architecture</li>
+            <li>Real-time pose estimation &amp; AI posture correction via MediaPipe</li>
+            <li>Hugging Face models + Google Maps API with GPS tracking</li>
+            <li>Offline-first SQLite architecture with secure backend sync</li>
+          </ul>
+          <div class="project-stack">
+            <span class="stack-tag">Flutter</span>
+            <span class="stack-tag">Flask</span>
+            <span class="stack-tag">MediaPipe</span>
+            <span class="stack-tag">TensorFlow</span>
+            <span class="stack-tag">SQLite</span>
+            <span class="stack-tag">Google Maps API</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERNATIONAL PROGRAMMES -->
+  <section id="international">
+    <div class="container reveal">
+      <div class="section-label">// international programmes</div>
+      <div class="divider"></div>
+      <h2 class="section-title">Selected to Represent UniKL MIIT</h2>
+      <div class="intl-grid">
+
+        <div class="intl-card">
+          <img src="images/ml-workshop.jpg" alt="ML Assistive Technology Workshop" class="intl-img" />
+          <div class="intl-body">
+            <div class="intl-badge">&#127760; International Representative</div>
+            <div class="intl-title">Machine Learning in Assistive Technology Workshop</div>
+            <div class="intl-host">Institut Teknologi Sepuluh Nopember (ITS) &mdash; Surabaya, Indonesia</div>
+            <p class="intl-desc">
+              Selected to represent UniKL MIIT in this immersive week-long international workshop focused on
+              cutting-edge AI applications in healthcare and assistive systems.
+            </p>
+            <div class="intl-tags">
+              <span class="stack-tag">CNN</span>
+              <span class="stack-tag">YOLOv8</span>
+              <span class="stack-tag">Object Detection</span>
+              <span class="stack-tag">Fall Detection</span>
+              <span class="stack-tag">Gesture Recognition</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="intl-card">
+          <img src="images/java-journey.jpg" alt="Java Journey Immersion 2026" class="intl-img" />
+          <div class="intl-body">
+            <div class="intl-badge">&#127760; International Representative</div>
+            <div class="intl-title">Java Journey Immersion 2026</div>
+            <div class="intl-host">Universitas Ciputra &mdash; Surabaya, Indonesia &bull; Apr 2026</div>
+            <p class="intl-desc">
+              Selected to represent UniKL MIIT in this 7-day international immersion programme covering
+              creative digital skills, AI fundamentals, design thinking, and cross-cultural innovation.
+            </p>
+            <div class="intl-tags">
+              <span class="stack-tag">Digital Communication</span>
+              <span class="stack-tag">AI Fundamentals</span>
+              <span class="stack-tag">Design Thinking</span>
+              <span class="stack-tag">Innovation Showcase</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CSR / LEADERSHIP -->
+  <section id="leadership">
+    <div class="container reveal">
+      <div class="section-label">// leadership &amp; community</div>
+      <div class="divider"></div>
+      <h2 class="section-title">Project Manager — CSR Programme</h2>
+      <div class="csr-layout">
+        <div class="csr-content">
+          <div class="csr-badge">&#127775; Coursework Leadership Achievement</div>
+          <div class="csr-title">Gotong-Royong @ National Stadium Bukit Jalil</div>
+          <div class="csr-host">In collaboration with Perbadanan Stadium Malaysia &bull; WEB20202 Professional English 1</div>
+          <p class="csr-desc">
+            Appointed as <strong style="color:var(--text)">Project Manager and Leader</strong> of 59 UniKL MIIT students
+            for a university coursework CSR programme in collaboration with a government agency,
+            Perbadanan Stadium Malaysia. Led the planning and execution of a full-day community cleanup
+            initiative at the National Stadium Bukit Jalil grounds, embodying the spirit of <em>gotong-royong</em>
+            — mutual cooperation and community service.
+          </p>
+          <ul class="csr-highlights">
+            <li>Led and coordinated a team of 59 students end-to-end</li>
+            <li>Official collaboration with Perbadanan Stadium Malaysia (Government Agency)</li>
+            <li>Received Sijil Penghargaan signed by the Chief Executive Officer</li>
+            <li>Promoted teamwork, social responsibility, and community engagement</li>
+            <li>Organised under WEB20202 Professional English 1 coursework</li>
+          </ul>
+          <img src="images/csr-5.jpg" alt="Sijil Penghargaan from Perbadanan Stadium Malaysia" class="plaque-img" />
+        </div>
+        <div>
+          <div class="csr-gallery">
+            <img src="images/csr-3.jpg" alt="Group photo at National Stadium Bukit Jalil" class="wide" />
+            <img src="images/csr-2.jpg" alt="Students group photo" />
+            <img src="images/csr-4.jpg" alt="Cleanup in action" />
+            <img src="images/csr-1.jpg" alt="Token exchange with government officials" class="wide" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="container reveal">
+      <div class="section-label">// education</div>
+      <div class="divider"></div>
+      <h2 class="section-title">Academic Background</h2>
+      <div class="edu-card">
+        <div class="edu-icon">&#127979;</div>
+        <div>
+          <div class="edu-degree">Bachelor of Information Technology (Hons) in Software Engineering</div>
+          <div class="edu-school">Universiti Kuala Lumpur — Malaysian Institute of Information Technology (UniKL MIIT)</div>
+          <div class="edu-meta">
+            <span class="edu-badge">2023 – Present</span>
+            <span class="edu-badge">Expected 2027</span>
+            <span class="edu-badge">CGPA 3.58 / 4.00</span>
+            <span class="edu-badge">&#127942; Dean's List</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certs">
+    <div class="container reveal">
+      <div class="section-label">// certifications</div>
+      <div class="divider"></div>
+      <h2 class="section-title">Credentials</h2>
+
+      <!-- Professional Certificates -->
+      <p style="color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">Professional Certificates</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem;">
+        <a href="https://coursera.org/verify/professional-cert/CGZYVZ8M0M1P" target="_blank" style="text-decoration:none;">
+          <div class="cert-card" style="flex-direction: column; align-items: flex-start; gap: 0.75rem; border-color: rgba(124,106,247,0.3);">
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+              <div class="cert-icon">&#129504;</div>
+              <div>
+                <div class="cert-name">IBM Generative AI Engineering</div>
+                <div class="cert-issuer">IBM &bull; 16 Courses &bull; Feb 2026</div>
+              </div>
+            </div>
+            <div style="font-size:0.75rem; color: var(--accent2);">&#128279; Verify Certificate</div>
+          </div>
+        </a>
+        <a href="https://coursera.org/verify/professional-cert/TD2VSTKEJ31O" target="_blank" style="text-decoration:none;">
+          <div class="cert-card" style="flex-direction: column; align-items: flex-start; gap: 0.75rem; border-color: rgba(124,106,247,0.3);">
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+              <div class="cert-icon">&#128187;</div>
+              <div>
+                <div class="cert-name">IBM AI Developer</div>
+                <div class="cert-issuer">IBM &bull; 10 Courses &bull; Feb 2026</div>
+              </div>
+            </div>
+            <div style="font-size:0.75rem; color: var(--accent2);">&#128279; Verify Certificate</div>
+          </div>
+        </a>
+        <a href="#" style="text-decoration:none;">
+          <div class="cert-card" style="flex-direction: column; align-items: flex-start; gap: 0.75rem; border-color: rgba(45,212,191,0.3);">
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+              <div class="cert-icon">&#128203;</div>
+              <div>
+                <div class="cert-name">Google Project Management</div>
+                <div class="cert-issuer">Google &bull; Coursera</div>
+              </div>
+            </div>
+            <div style="font-size:0.75rem; color: var(--teal);">&#127942; Professional Certificate</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Individual Courses -->
+      <p style="color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">Individual Course Certificates</p>
+      <div class="certs-grid">
+        <a href="https://coursera.org/verify/FRAN8BSIJZ17" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#129504;</div>
+          <div><div class="cert-name">Generative AI: Introduction and Applications</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/HGD02VOQWVE7" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#128172;</div>
+          <div><div class="cert-name">Generative AI: Prompt Engineering Basics</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/1CU4MVFU7Z9H" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#128300;</div>
+          <div><div class="cert-name">Building GenAI-Powered Apps with Python</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/E3ZHG0GWN07R" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#128640;</div>
+          <div><div class="cert-name">GenAI: Elevate your Software Dev Career</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/EARU0C637Z1D" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#128013;</div>
+          <div><div class="cert-name">Developing AI Applications with Python &amp; Flask</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/HIB65DM3PIKI" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#129302;</div>
+          <div><div class="cert-name">Generative AI and LLMs: Architecture &amp; Data Prep</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/PPCNCQKD2HEM" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#128218;</div>
+          <div><div class="cert-name">Gen AI Foundational Models for NLP</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/JPBBI36MDG8N" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#128260;</div>
+          <div><div class="cert-name">GenAI Language Modeling with Transformers</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/GHDLT9H2IJ9J" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#9881;&#65039;</div>
+          <div><div class="cert-name">GenAI Engineering &amp; Fine-Tuning Transformers</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/KQCF316QGPID" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#128200;</div>
+          <div><div class="cert-name">GenAI Advance Fine-Tuning for LLMs</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/H449UEFUFBVV" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#129302;</div>
+          <div><div class="cert-name">Fundamentals of AI Agents Using RAG &amp; LangChain</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/Z4BTUE65NMEX" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#127979;</div>
+          <div><div class="cert-name">Project: GenAI Applications with RAG &amp; LangChain</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/I8EXLZNCU7SJ" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#128202;</div>
+          <div><div class="cert-name">Machine Learning with Python</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/JA7L7DMZJI3A" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#128013;</div>
+          <div><div class="cert-name">Python for Data Science, AI &amp; Development</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/FHE8GU18M3C3" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#127760;</div>
+          <div><div class="cert-name">Introduction to HTML, CSS, &amp; JavaScript</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/X3NVWX6DGPJX" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#128187;</div>
+          <div><div class="cert-name">Introduction to Software Engineering</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+        <a href="https://coursera.org/verify/STR1WT9D7D2P" target="_blank" class="cert-card" style="text-decoration:none; color:inherit;">
+          <div class="cert-icon">&#128084;</div>
+          <div><div class="cert-name">Software Developer Career Guide &amp; Interview Prep</div><div class="cert-issuer">IBM &bull; Feb 2026</div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container reveal">
+      <div class="section-label">// contact</div>
+      <div class="divider"></div>
+      <h2 class="section-title">Get In Touch</h2>
+      <p style="color: var(--muted); margin-bottom: 2rem; max-width: 520px;">
+        I'm currently open to internship and entry-level opportunities. Feel free to reach out!
+      </p>
+      <div class="contact-grid">
+        <a href="mailto:damiafarid123@gmail.com" class="contact-card">
+          <div class="contact-icon">&#128140;</div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">damiafarid123@gmail.com</div>
+        </a>
+        <a href="https://www.linkedin.com/in/damia-yuhanes-farid-331492305/" target="_blank" class="contact-card">
+          <div class="contact-icon">&#128101;</div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">Damia Yuhanes Farid</div>
+        </a>
+        <a href="https://github.com/DamiaYuhanes" target="_blank" class="contact-card">
+          <div class="contact-icon">&#128025;</div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">DamiaYuhanes</div>
+        </a>
+        <a href="https://github.com/DamiaYuhanes" target="_blank" class="contact-card">
+          <div class="contact-icon">&#127758;</div>
+          <div class="contact-label">Location</div>
+          <div class="contact-value">Kuala Lumpur, Malaysia</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Designed &amp; built by <span>Damia Yuhanes</span> &mdash; Kuala Lumpur, Malaysia &bull; 2025</p>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => obs.observe(r));
+  </script>
+
+</body>
+</html>
